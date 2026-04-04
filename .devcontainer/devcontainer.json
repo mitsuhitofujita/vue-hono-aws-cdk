@@ -1,0 +1,27 @@
+{
+    "name": "node-pnpm",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "forwardPorts": [
+    ],
+    "remoteUser": "node",
+    "mounts": [
+        "source=${localEnv:HOME}/.claude,target=/home/node/.claude,type=bind,consistency=cached",
+        "source=${localEnv:HOME}/.aws,target=/home/node/.aws,type=bind,consistency=cached"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+            ],
+            "settings": {
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash"
+                    }
+                },
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    }
+}

@@ -1,0 +1,5 @@
+{
+  "name": "vue-hono-aws-cdk",
+  "private": true,
+  "packageManager": "pnpm@10.8.0"
+}

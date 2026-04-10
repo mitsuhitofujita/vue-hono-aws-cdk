@@ -7,15 +7,15 @@
 - CDK project initialization
 - CloudFront distribution resource
 - S3 bucket for static website hosting
-
-## In Progress
-
 - Vue.js setup in `apps/frontend`
 - Display only the application title on the home page
 
-## Planned (not yet started)
+## In Progress
 
 - Static web deployment
+
+## Planned (not yet started)
+
 - Linter integration
 - Page layout implementation
 - UI/UX design

@@ -1,5 +1,8 @@
 {
   "name": "vue-hono-aws-cdk",
   "private": true,
+  "scripts": {
+    "kill-port": "bash scripts/kill-port/kill-port.sh"
+  },
   "packageManager": "pnpm@10.8.0"
 }

@@ -57,7 +57,7 @@ Stacks are separated by update frequency:
     - Data retrieval from the data store
 - `./tests/e2e`
     - E2E tests using Playwright
-- `./infra/iac`
+- `./infra/cdk`
     - IaC using CDK
     - Provisions per-developer cloud resources for verification
 

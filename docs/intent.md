@@ -29,3 +29,7 @@ An air conditioner purchased in March 2026 for 100,000 JPY:
 | May 2026       | 3                   | 33,333 JPY     |
 
 This concept is analogous to average fixed cost in economics, where the number of months in operation replaces the quantity of output.
+
+## Application Name
+
+tocoop

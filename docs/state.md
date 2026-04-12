@@ -9,10 +9,11 @@
 - S3 bucket for static website hosting
 - Vue.js setup in `apps/frontend`
 - Display only the application title on the home page
+- Static web deployment
 
 ## In Progress
 
-- Static web deployment
+
 
 ## Planned (not yet started)
 

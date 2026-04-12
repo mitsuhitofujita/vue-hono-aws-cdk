@@ -9,6 +9,8 @@ interface DistributionStackProps extends StackProps {
 }
 
 export class DistributionStack extends Stack {
+  public readonly distribution: cloudfront.Distribution;
+
   constructor(scope: Construct, id: string, props: DistributionStackProps) {
     super(scope, id, props);
 
@@ -18,7 +20,7 @@ export class DistributionStack extends Stack {
       props.websiteBucketName,
     );
 
-    const distribution = new cloudfront.Distribution(this, "Distribution", {
+    this.distribution = new cloudfront.Distribution(this, "Distribution", {
       defaultBehavior: {
         origin:
           origins.S3BucketOrigin.withOriginAccessControl(websiteBucket),
@@ -54,7 +56,7 @@ export class DistributionStack extends Stack {
               StringEquals: {
                 "AWS:SourceArn": Fn.join("", [
                   `arn:aws:cloudfront::${this.account}:distribution/`,
-                  distribution.distributionId,
+                  this.distribution.distributionId,
                 ]),
               },
             },
@@ -64,11 +66,11 @@ export class DistributionStack extends Stack {
     });
 
     new CfnOutput(this, "DistributionDomainName", {
-      value: distribution.distributionDomainName,
+      value: this.distribution.distributionDomainName,
     });
 
     new CfnOutput(this, "DistributionId", {
-      value: distribution.distributionId,
+      value: this.distribution.distributionId,
     });
   }
 }

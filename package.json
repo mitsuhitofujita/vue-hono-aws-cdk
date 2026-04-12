@@ -2,7 +2,10 @@
   "name": "vue-hono-aws-cdk",
   "private": true,
   "scripts": {
-    "kill-port": "bash scripts/kill-port/kill-port.sh"
+    "kill-port": "bash scripts/kill-port/kill-port.sh",
+    "build:frontend": "pnpm --filter @vue-hono-aws-cdk/frontend build",
+    "deploy": "pnpm build:frontend && pnpm --filter @vue-hono-aws-cdk/cdk cdk deploy --all",
+    "deploy:web": "pnpm build:frontend && pnpm --filter @vue-hono-aws-cdk/cdk cdk deploy \"*-Deployment\""
   },
   "packageManager": "pnpm@10.8.0"
 }

@@ -6,6 +6,7 @@
 |---|---|
 | Cloud Platform | AWS |
 | Authentication | Amazon Cognito |
+| Authentication Provider | Google only (no email authentication or other providers) |
 | Frontend Hosting | CloudFront + S3 (static file delivery with Vue.js) |
 | Backend | CloudFront + API Gateway (Cognito Authorizer) + Lambda + Hono |
 | Language | TypeScript |
@@ -24,6 +25,7 @@ A single CloudFront distribution is used with path-based routing, eliminating th
 ## Authentication Strategy
 
 The frontend acquires authentication credentials. The backend only validates them.
+Token management is handled by the Amplify Auth module.
 Cognito Authorizer is used for backend authorization.
 
 ## Development Environment
@@ -102,8 +104,19 @@ Stacks are separated by update frequency:
 
 ### `/` Home Page
 
-- **Unauthenticated**: Displays a login form.
-- **Authenticated**: Displays authentication information.
+- Title: "TOCOOP"
+    - Subtitle: "COST PER MONTH TRACKER"
+- A brief description in English:
+    - "Track the real cost of your purchases."
+    - "See how value grows over time."
+- **Unauthenticated**:
+    - Sign in with Google button only (since only Google authentication is supported).
+- **Authenticated**:
+    - Profile image
+    - Display name
+    - Link button to the item list page
+    - Sign-out link button
+- Centered on the screen.
 
 ### `/items` Item List Page
 

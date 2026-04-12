@@ -10,17 +10,19 @@
 - Vue.js setup in `apps/frontend`
 - Display only the application title on the home page
 - Static web deployment
+    - Home page displaying only the title is served
 
 ## In Progress
 
-
+- UI design
+- Home page implementation
+    - No authentication
 
 ## Planned (not yet started)
 
 - Linter integration
-- Page layout implementation
-- UI/UX design
 - Authentication implementation
+- Frontend refactoring with component architecture
 - Backend implementation
 - CDK refactoring
     - Currently CloudFront depends on S3

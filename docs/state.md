@@ -11,15 +11,19 @@
 - Display only the application title on the home page
 - Static web deployment
     - Home page displaying only the title is served
-
-## In Progress
-
 - UI design
 - Home page implementation
     - No authentication
+- Cognito resource definition in CDK
+    - Google authentication only
+    - Display name, identifier, and profile picture
+
+## In Progress
 
 ## Planned (not yet started)
 
+- Apply design to the home page
+- Implement authentication on the home page
 - Linter integration
 - Authentication implementation
 - Frontend refactoring with component architecture

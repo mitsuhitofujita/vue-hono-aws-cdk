@@ -16,16 +16,25 @@
     - No authentication
 - Cognito resource definition in CDK
     - Google authentication only
-    - Display name, identifier, and profile picture
+    - Only display name and identifier are required by the application
+- Apply design to the home page
+    - Implement the unauthenticated view
+        - Includes the Sign in with Google button
 
 ## In Progress
 
 ## Planned (not yet started)
 
-- Apply design to the home page
 - Implement authentication on the home page
+- Apply design to the home page
+    - Implement the authenticated view
+- Backend resource provisioning
+    - Implement the item list API that returns an empty item list
+    - Use an API Gateway authorizer for signature verification and expiration handling
+        - Evaluate the Cognito user pool authorizer
 - Linter integration
-- Authentication implementation
+- Item list page implementation
+- Item create page implementation
 - Frontend refactoring with component architecture
 - Backend implementation
 - CDK refactoring

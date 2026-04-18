@@ -1,4 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAuth } from "../composables/useAuth";
+
+const { user, isAuthenticated, isLoading, signInWithGoogle, signOut } =
+  useAuth();
+</script>
 
 <template>
   <main class="flex-1 flex items-center justify-center px-4">
@@ -26,7 +31,9 @@
         </p>
       </div>
 
-      <div class="border border-stone-200 bg-white p-6">
+      <div v-if="isLoading" class="h-40" aria-hidden="true"></div>
+
+      <div v-else-if="!isAuthenticated" class="border border-stone-200 bg-white p-6">
         <h2
           class="font-logo text-xs tracking-wider text-stone-400 uppercase mb-6 text-center border-b border-stone-100 pb-3"
         >
@@ -35,7 +42,8 @@
 
         <button
           type="button"
-          class="w-full border border-stone-300 hover:border-primary-400 py-2.5 text-sm font-medium text-stone-600 hover:text-primary-700 tracking-wide transition-colors flex items-center justify-center gap-2"
+          class="w-full border border-stone-300 hover:border-primary-400 py-2.5 text-sm font-medium text-stone-600 hover:text-primary-700 tracking-wide transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          @click="signInWithGoogle"
         >
           <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none">
             <path
@@ -57,6 +65,67 @@
           </svg>
           Sign in with Google
         </button>
+      </div>
+
+      <div v-else class="border border-stone-200 bg-white p-6">
+        <h2
+          class="font-logo text-xs tracking-wider text-stone-400 uppercase mb-6 text-center border-b border-stone-100 pb-3"
+        >
+          Account
+        </h2>
+
+        <div class="flex justify-center mb-5">
+          <div
+            class="w-20 h-20 rounded-full bg-primary-100 border-2 border-primary-300 flex items-center justify-center overflow-hidden"
+          >
+            <img
+              v-if="user?.picture"
+              :src="user.picture"
+              :alt="user.displayName"
+              class="w-full h-full object-cover"
+              referrerpolicy="no-referrer"
+            />
+            <svg
+              v-else
+              class="w-10 h-10 text-primary-500"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <div class="border border-stone-100 px-4 py-3">
+            <p
+              class="text-xs font-medium text-stone-400 uppercase tracking-wide mb-1"
+            >
+              Display Name
+            </p>
+            <p class="text-sm text-stone-800 font-medium">
+              {{ user?.displayName }}
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-stone-100 space-y-3">
+          <a
+            href="/items"
+            class="block w-full bg-primary-600 hover:bg-primary-700 text-white py-2.5 text-sm font-medium tracking-wide uppercase transition-colors text-center"
+          >
+            Items
+          </a>
+          <button
+            type="button"
+            class="w-full border border-stone-300 hover:border-stone-400 py-2.5 text-sm font-medium text-stone-600 hover:text-stone-700 tracking-wide uppercase transition-colors"
+            @click="signOut"
+          >
+            Sign Out
+          </button>
+        </div>
       </div>
     </div>
   </main>

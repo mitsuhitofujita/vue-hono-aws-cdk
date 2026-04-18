@@ -1,1 +1,1 @@
-{"root":["./env.d.ts","./src/main.ts","./src/App.vue","./src/components/AppFooter.vue","./src/views/HomeView.vue"],"version":"5.8.3"}
+{"root":["./env.d.ts","./src/main.ts","./src/composables/useAuth.ts","./src/lib/amplify.ts","./src/App.vue","./src/components/AppFooter.vue","./src/views/HomeView.vue"],"version":"5.8.3"}

@@ -2,3 +2,4 @@
 .local/
 .pnpm-store/
 node_modules/
+.env

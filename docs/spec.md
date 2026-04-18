@@ -7,13 +7,13 @@
 | Cloud Platform | AWS |
 | Authentication | Amazon Cognito |
 | Authentication Provider | Google only (no email authentication or other providers) |
-| Frontend Hosting | CloudFront + S3 (static file delivery with Vue.js) |
+| Frontend | CloudFront + S3 + Vue.js (static file delivery) |
 | Backend | CloudFront + API Gateway (Cognito Authorizer) + Lambda + Hono |
 | Language | TypeScript |
 | IaC | AWS CDK (TypeScript) |
 | Runtime | Node.js (Lambda) |
 | E2E Testing | Playwright (TypeScript) |
-| Supported Browser | Google Chrome (or Chromium-based derivatives) only |
+| Browser | Google Chrome (or Chromium-based derivatives) only |
 | Package Manager | pnpm (workspaces for frontend, backend, and E2E) |
 | Data Storage | DynamoDB |
 | Linter | oxlint |
@@ -24,9 +24,9 @@ A single CloudFront distribution is used with path-based routing, eliminating th
 
 ## Authentication Strategy
 
-The frontend acquires authentication credentials. The backend only validates them.
+The frontend acquires authentication credentials; the backend only validates them.
 Token management is handled by the Amplify Auth module.
-Cognito Authorizer is used for backend authorization.
+Cognito Authorizer is used.
 
 ## Development Environment
 
@@ -38,15 +38,15 @@ This environment can be freely destroyed and recreated.
 
 Stacks are separated by update frequency:
 
-- **Rarely changed**: Resources that are essentially static once created (e.g., S3 buckets).
-- **Infrequently changed**: Resources that change rarely and require caution when modified (e.g., DynamoDB tables).
-- **Frequently changed**: Resources that are updated often (e.g., Lambda functions).
+- Resources that are essentially static once created (e.g., S3 buckets).
+- Resources that change rarely and require caution when modified (e.g., DynamoDB tables).
+- Resources that are updated frequently (e.g., Lambda functions).
 
 ## Testing Strategy (Testing Honeycomb)
 
-- **Feature tests** (most): Run in a local environment that includes DynamoDB (provided by the development environment).
-- **E2E tests**: Run against the cloud environment using Playwright.
-- **Unit tests** (fewest): Logic verification using test stubs.
+- Feature tests (most): Run in a local environment that includes DynamoDB (provided by the development environment).
+- E2E tests: Run against the cloud environment using Playwright.
+- Unit tests (fewest): Logic verification using test stubs.
 
 ## Directory Structure
 
@@ -72,19 +72,15 @@ Stacks are separated by update frequency:
 
 ### Item
 
-| | |
-|---|---|
-| Logical Name | Item (物品) |
-| Physical Name | `item` |
+- Logical name: 物品 (Item)
+- Physical name: `item`
 
-#### Attributes
+Attributes:
 
-| Attribute | Description |
-|---|---|
-| Item Name | Name of the purchased item |
-| Purchase Date | Year and month of purchase |
-| Purchase Price | Price paid for the item |
-| Disposal Date | Year and month of disposal |
+- Item name
+- Purchase date (year and month)
+- Purchase price
+- Disposal date (year and month)
 
 ## Page Layout
 
@@ -92,8 +88,8 @@ Stacks are separated by update frequency:
 
 - Not displayed on the home page.
 - Left: Application title.
-- Right (authenticated): Account name.
-    - Tapping the account name slides a navigation menu in from right to left.
+- Right (authenticated): Account image (circular).
+    - Tapping the account image slides a navigation menu in from right to left.
 
 ### Global Footer
 
@@ -106,49 +102,57 @@ Stacks are separated by update frequency:
 
 - Title: "TOCOOP"
     - Subtitle: "COST PER MONTH TRACKER"
-- A brief description in English:
+- Brief description (in English):
     - "Track the real cost of your purchases."
     - "See how value grows over time."
-- **Unauthenticated**:
-    - Sign in with Google button only (since only Google authentication is supported).
-- **Authenticated**:
-    - Profile image
-    - Display name
-    - Link button to the item list page
-    - Sign-out link button
+- Unauthenticated:
+    - Sign-in form.
+        - Since only Google authentication is supported, only a Sign in with Google button is displayed.
+- Authenticated:
+    - Account info:
+        - Image
+        - Display name
+    - Link button to the item list page:
+        - Gift icon and label "ITEMS"
+    - Sign-out link button:
+        - Exit icon (or simply an outward-pointing icon) and label "SIGN OUT"
 - Centered on the screen.
 
 ### `/items` Item List Page
 
 - Paginated.
+- Add button:
+    - Icon and label "ADD"
+    - Rectangular shape
+    - Plus icon
+    - Placed above the list, below the list title "ITEMS"
 - Displays items in a list with:
     - Item name
     - Purchase date (year and month)
 - Sorted by purchase date in descending order (newest first).
-- Add button:
-    - Icon only (no text label)
-    - Circular shape
-    - Plus icon
 
 ### `/items/create` Item Create Page
 
 - Item name input field
 - Purchase price input field
 - Purchase date input field (year and month)
-- Update button (text label)
-- Delete button (text label)
+- Apply button:
+    - Check icon and label "APPLY"
 
 ### `/items/{itemId}` Item Detail Page
 
 - Item name
 - Purchase price
 - Purchase date (year and month)
-- Average fixed cost for the current month
+- Average fixed cost
     - Calculated on each page access.
+    - If the disposal date is not set, the cost is calculated for the current month.
+    - If the disposal date is set, the cost is calculated for the disposal month.
 - Edit button:
-    - Icon only (no text label)
-    - Circular shape
+    - Icon and label "EDIT"
+    - Rectangular shape
     - Pencil icon
+    - Placed below the item information
 
 ### `/items/{itemId}/edit` Item Edit Page
 
@@ -156,8 +160,10 @@ Stacks are separated by update frequency:
 - Purchase price input field
 - Purchase date input field (year and month)
 - Disposal date input field (year and month)
-- Update button (text label)
-- Delete button (text label)
+- Apply button:
+    - Check icon and label "APPLY"
+- Delete button:
+    - Trash icon and label "DELETE"
 
 ## REST API Endpoints
 

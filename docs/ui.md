@@ -10,8 +10,10 @@
 
 ### Design
 
-- Buttons and links use icon-only labels (no text).
-- Accordingly, buttons and links have a circular background shape.
+- Buttons and links display both an icon and a text label.
+- Buttons use rectangular shapes; rounded corners are not used.
+- The only exception is the account image in the global header, which is circular.
+- Tapping the account image slides a navigation menu in from the right.
 
 ### Color
 

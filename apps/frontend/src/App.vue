@@ -1,7 +1,9 @@
 <script setup lang="ts">
-const title = "tocoop";
+import HomeView from "./views/HomeView.vue";
+import AppFooter from "./components/AppFooter.vue";
 </script>
 
 <template>
-  <h1>{{ title }}</h1>
+  <HomeView />
+  <AppFooter />
 </template>

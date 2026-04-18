@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --font-logo: "DM Mono", monospace;
+  --font-body: "Inter", sans-serif;
+
+  --color-primary-50: #f4f7ed;
+  --color-primary-100: #e6edda;
+  --color-primary-200: #cedbb8;
+  --color-primary-300: #afc48d;
+  --color-primary-400: #93ad6a;
+  --color-primary-500: #7a9650;
+  --color-primary-600: #5e763d;
+  --color-primary-700: #4a5c33;
+  --color-primary-800: #3d4b2d;
+  --color-primary-900: #354029;
+
+  --color-secondary-50: #faf8ed;
+  --color-secondary-100: #f3efd3;
+  --color-secondary-200: #e8dfa8;
+  --color-secondary-300: #d9c974;
+  --color-secondary-400: #ccb54c;
+  --color-secondary-500: #bda03e;
+  --color-secondary-600: #a37e33;
+  --color-secondary-700: #835e2c;
+  --color-secondary-800: #6d4d2b;
+  --color-secondary-900: #5e4128;
+}
+
+body {
+  font-family: var(--font-body);
+}

@@ -4,6 +4,7 @@ import { StorageStack } from "./stacks/storage-stack";
 import { DistributionStack } from "./stacks/distribution-stack";
 import { DeploymentStack } from "./stacks/deployment-stack";
 import { AuthStack } from "./stacks/auth-stack";
+import { DataStack } from "./stacks/data-stack";
 
 const app = new cdk.App();
 const envName = app.node.tryGetContext("envName") ?? "dev";
@@ -27,3 +28,5 @@ new AuthStack(app, `${envName}-Auth`, {
   googleClientId,
   googleClientSecret,
 });
+
+new DataStack(app, `${envName}-Data`);

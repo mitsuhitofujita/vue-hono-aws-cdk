@@ -9,14 +9,13 @@ import * as cognito from "aws-cdk-lib/aws-cognito";
 import type { Construct } from "constructs";
 
 interface AuthStackProps extends StackProps {
-  distributionDomainName: string;
   googleClientId: string;
   googleClientSecret: string;
 }
 
 export class AuthStack extends Stack {
   public readonly userPool: cognito.UserPool;
-  public readonly userPoolClient: cognito.UserPoolClient;
+  public readonly googleIdp: cognito.UserPoolIdentityProviderGoogle;
 
   constructor(scope: Construct, id: string, props: AuthStackProps) {
     super(scope, id, props);
@@ -37,7 +36,7 @@ export class AuthStack extends Stack {
       mfa: cognito.Mfa.OFF,
     });
 
-    const googleIdp = new cognito.UserPoolIdentityProviderGoogle(
+    this.googleIdp = new cognito.UserPoolIdentityProviderGoogle(
       this,
       "GoogleIdp",
       {
@@ -59,37 +58,8 @@ export class AuthStack extends Stack {
       cognitoDomain: { domainPrefix: `${envName}-tocoop` },
     });
 
-    this.userPoolClient = this.userPool.addClient("WebClient", {
-      generateSecret: false,
-      supportedIdentityProviders: [
-        cognito.UserPoolClientIdentityProvider.GOOGLE,
-      ],
-      oAuth: {
-        flows: { authorizationCodeGrant: true },
-        callbackUrls: [
-          `https://${props.distributionDomainName}/`,
-          "http://localhost:5173/",
-        ],
-        logoutUrls: [
-          `https://${props.distributionDomainName}/`,
-          "http://localhost:5173/",
-        ],
-        scopes: [
-          cognito.OAuthScope.OPENID,
-          cognito.OAuthScope.EMAIL,
-          cognito.OAuthScope.PROFILE,
-        ],
-      },
-    });
-
-    this.userPoolClient.node.addDependency(googleIdp);
-
     new CfnOutput(this, "UserPoolId", {
       value: this.userPool.userPoolId,
-    });
-
-    new CfnOutput(this, "UserPoolClientId", {
-      value: this.userPoolClient.userPoolClientId,
     });
 
     new CfnOutput(this, "UserPoolDomainPrefix", {

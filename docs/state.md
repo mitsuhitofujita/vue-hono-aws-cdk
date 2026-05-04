@@ -35,20 +35,20 @@
     - Keep the shared global header and footer, as well as the page header, font sizes, color palette, and icon sizes, exactly identical to the item list page
 - DynamoDB table design and provisioning
 - DynamoDB table definition added to CDK under `infra/cdk`
-
-## In Progress
-
 - Backend code scaffolding
     - Initial setup of the Hono framework targeting Lambda
         - Located in the `apps/backend` directory
     - Implement the item list API returning an empty (or dummy) item list
 
-## Planned (not yet started)
+## In Progress
 
 - Backend Lambda resource provisioning
     - Add a backend stack under `infra/cdk`
     - Use an API Gateway authorizer for signature verification and expiration handling
         - Evaluate the Cognito user pool authorizer
+
+## Planned (not yet started)
+
 - Backend access to DynamoDB
 - Backend feature tests running locally against a local DynamoDB
     - Isolate the Lambda layer and run tests that exercise storage

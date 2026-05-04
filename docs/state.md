@@ -39,6 +39,8 @@
     - Initial setup of the Hono framework targeting Lambda
         - Located in the `apps/backend` directory
     - Implement the item list API returning an empty (or dummy) item list
+- Split the user pool client out of the Cognito stack
+    - `AuthStack` no longer depends on the CloudFront `Distribution`
 
 ## In Progress
 

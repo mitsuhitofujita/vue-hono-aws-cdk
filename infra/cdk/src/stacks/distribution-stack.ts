@@ -20,27 +20,48 @@ export class DistributionStack extends Stack {
       props.websiteBucketName,
     );
 
+    const spaFallbackFunction = new cloudfront.Function(
+      this,
+      "SpaFallbackFunction",
+      {
+        code: cloudfront.FunctionCode.fromInline(`
+function handler(event) {
+  var request = event.request;
+  var uri = request.uri;
+  if (uri.indexOf('/assets/') === 0) {
+    return request;
+  }
+  if (uri === '/index.html') {
+    return request;
+  }
+  var lastSlash = uri.lastIndexOf('/');
+  var lastSegment = uri.substring(lastSlash + 1);
+  if (lastSegment.indexOf('.') !== -1) {
+    return request;
+  }
+  request.uri = '/index.html';
+  return request;
+}
+`),
+        runtime: cloudfront.FunctionRuntime.JS_2_0,
+      },
+    );
+
     this.distribution = new cloudfront.Distribution(this, "Distribution", {
       defaultBehavior: {
         origin:
           origins.S3BucketOrigin.withOriginAccessControl(websiteBucket),
         viewerProtocolPolicy:
           cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        functionAssociations: [
+          {
+            function: spaFallbackFunction,
+            eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+          },
+        ],
       },
       defaultRootObject: "index.html",
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
-      errorResponses: [
-        {
-          httpStatus: 403,
-          responseHttpStatus: 200,
-          responsePagePath: "/index.html",
-        },
-        {
-          httpStatus: 404,
-          responseHttpStatus: 200,
-          responsePagePath: "/index.html",
-        },
-      ],
     });
 
     new CfnOutput(this, "DistributionDomainName", {

@@ -5,7 +5,6 @@ import type { Construct } from "constructs";
 interface AuthClientStackProps extends StackProps {
   userPool: cognito.IUserPool;
   googleIdp: cognito.UserPoolIdentityProviderGoogle;
-  distributionDomainName: string;
 }
 
 export class AuthClientStack extends Stack {
@@ -22,14 +21,8 @@ export class AuthClientStack extends Stack {
       ],
       oAuth: {
         flows: { authorizationCodeGrant: true },
-        callbackUrls: [
-          `https://${props.distributionDomainName}/`,
-          "http://localhost:5173/",
-        ],
-        logoutUrls: [
-          `https://${props.distributionDomainName}/`,
-          "http://localhost:5173/",
-        ],
+        callbackUrls: ["http://localhost:5173/"],
+        logoutUrls: ["http://localhost:5173/"],
         scopes: [
           cognito.OAuthScope.OPENID,
           cognito.OAuthScope.EMAIL,

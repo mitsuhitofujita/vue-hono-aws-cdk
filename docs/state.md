@@ -44,17 +44,20 @@
 - Split the S3 bucket policy out of the CloudFront stack
     - Introduced `WebsiteOriginAccessStack` for the OAC bucket policy
     - `StorageStack` and `DistributionStack` no longer have a cross-stack reference
+- Backend Lambda resource provisioning
+    - Added `BackendStack` for the Lambda function (NodejsFunction with esbuild)
+    - Added `BackendDataAccessStack` to grant the Lambda DynamoDB access
+    - Added `BackendApiStack` for HTTP API + Cognito JWT authorizer + Lambda proxy integration
+    - Added `DistributionApiOriginStack` for the CloudFront `/api/*` behavior
+    - Replaced CloudFront SPA fallback `errorResponses` with a CloudFront Function on the default behavior so API responses are not rewritten
+    - Broke the AuthClient/Distribution/BackendApi 3-stack circular dependency by deferring CloudFront-domain OAuth callback updates to a new `AuthClientCallbackStack` (uses an `AwsCustomResource` calling `cognito-idp:UpdateUserPoolClient`)
 
 ## In Progress
 
-- Backend Lambda resource provisioning
-    - Add a backend stack under `infra/cdk`
-    - Use an API Gateway authorizer for signature verification and expiration handling
-        - Evaluate the Cognito user pool authorizer
+- Backend access to DynamoDB
 
 ## Planned (not yet started)
 
-- Backend access to DynamoDB
 - Backend feature tests running locally against a local DynamoDB
     - Isolate the Lambda layer and run tests that exercise storage
 - Linter integration

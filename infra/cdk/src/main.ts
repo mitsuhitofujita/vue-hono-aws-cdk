@@ -6,7 +6,12 @@ import { WebsiteOriginAccessStack } from "./stacks/website-origin-access-stack";
 import { DeploymentStack } from "./stacks/deployment-stack";
 import { AuthStack } from "./stacks/auth-stack";
 import { AuthClientStack } from "./stacks/auth-client-stack";
+import { AuthClientCallbackStack } from "./stacks/auth-client-callback-stack";
 import { DataStack } from "./stacks/data-stack";
+import { BackendStack } from "./stacks/backend-stack";
+import { BackendDataAccessStack } from "./stacks/backend-data-access-stack";
+import { BackendApiStack } from "./stacks/backend-api-stack";
+import { DistributionApiOriginStack } from "./stacks/distribution-api-origin-stack";
 
 const app = new cdk.App();
 const envName = app.node.tryGetContext("envName") ?? "dev";
@@ -39,10 +44,36 @@ const authStack = new AuthStack(app, `${envName}-Auth`, {
   googleClientSecret,
 });
 
-new AuthClientStack(app, `${envName}-AuthClient`, {
+const authClientStack = new AuthClientStack(app, `${envName}-AuthClient`, {
   userPool: authStack.userPool,
   googleIdp: authStack.googleIdp,
-  distributionDomainName: distributionStack.distribution.distributionDomainName,
 });
 
-new DataStack(app, `${envName}-Data`);
+const dataStack = new DataStack(app, `${envName}-Data`);
+
+const backendStack = new BackendStack(app, `${envName}-Backend`, {
+  itemsTableName: dataStack.itemsTable.tableName,
+});
+
+new BackendDataAccessStack(app, `${envName}-BackendDataAccess`, {
+  itemsTableName: dataStack.itemsTable.tableName,
+  handlerRoleName: backendStack.handler.role!.roleName,
+});
+
+const backendApiStack = new BackendApiStack(app, `${envName}-BackendApi`, {
+  handlerArn: backendStack.handler.functionArn,
+  userPoolId: authStack.userPool.userPoolId,
+  userPoolClientId: authClientStack.userPoolClient.userPoolClientId,
+});
+
+new DistributionApiOriginStack(app, `${envName}-DistributionApiOrigin`, {
+  distribution: distributionStack.distribution,
+  apiDomainName: backendApiStack.apiDomainName,
+});
+
+new AuthClientCallbackStack(app, `${envName}-AuthClientCallback`, {
+  userPoolId: authStack.userPool.userPoolId,
+  userPoolArn: authStack.userPool.userPoolArn,
+  userPoolClientId: authClientStack.userPoolClient.userPoolClientId,
+  distributionDomainName: distributionStack.distribution.distributionDomainName,
+});

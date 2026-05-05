@@ -47,12 +47,13 @@
 
 ## In Progress
 
-## Planned (not yet started)
-
 - Backend Lambda resource provisioning
     - Add a backend stack under `infra/cdk`
     - Use an API Gateway authorizer for signature verification and expiration handling
         - Evaluate the Cognito user pool authorizer
+
+## Planned (not yet started)
+
 - Backend access to DynamoDB
 - Backend feature tests running locally against a local DynamoDB
     - Isolate the Lambda layer and run tests that exercise storage

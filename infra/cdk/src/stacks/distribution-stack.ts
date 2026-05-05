@@ -1,4 +1,4 @@
-import { Stack, type StackProps, CfnOutput, Fn } from "aws-cdk-lib";
+import { Stack, type StackProps, CfnOutput } from "aws-cdk-lib";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 import * as s3 from "aws-cdk-lib/aws-s3";
@@ -41,28 +41,6 @@ export class DistributionStack extends Stack {
           responsePagePath: "/index.html",
         },
       ],
-    });
-
-    new s3.CfnBucketPolicy(this, "WebsiteBucketPolicy", {
-      bucket: props.websiteBucketName,
-      policyDocument: {
-        Statement: [
-          {
-            Effect: "Allow",
-            Principal: { Service: "cloudfront.amazonaws.com" },
-            Action: "s3:GetObject",
-            Resource: `${websiteBucket.bucketArn}/*`,
-            Condition: {
-              StringEquals: {
-                "AWS:SourceArn": Fn.join("", [
-                  `arn:aws:cloudfront::${this.account}:distribution/`,
-                  this.distribution.distributionId,
-                ]),
-              },
-            },
-          },
-        ],
-      },
     });
 
     new CfnOutput(this, "DistributionDomainName", {

@@ -41,16 +41,18 @@
     - Implement the item list API returning an empty (or dummy) item list
 - Split the user pool client out of the Cognito stack
     - `AuthStack` no longer depends on the CloudFront `Distribution`
+- Split the S3 bucket policy out of the CloudFront stack
+    - Introduced `WebsiteOriginAccessStack` for the OAC bucket policy
+    - `StorageStack` and `DistributionStack` no longer have a cross-stack reference
 
 ## In Progress
+
+## Planned (not yet started)
 
 - Backend Lambda resource provisioning
     - Add a backend stack under `infra/cdk`
     - Use an API Gateway authorizer for signature verification and expiration handling
         - Evaluate the Cognito user pool authorizer
-
-## Planned (not yet started)
-
 - Backend access to DynamoDB
 - Backend feature tests running locally against a local DynamoDB
     - Isolate the Lambda layer and run tests that exercise storage
@@ -59,6 +61,3 @@
 - Item create page implementation
 - Frontend refactoring with component architecture
 - Backend implementation
-- CDK refactoring
-    - Currently CloudFront depends on S3
-    - Separate into three stages: S3 creation, CloudFront creation, and association of both, to eliminate the dependency

@@ -1,0 +1,35 @@
+import { fetchAuthSession } from "aws-amplify/auth";
+
+export interface Item {
+  itemId: string;
+  name: string;
+  purchaseYear: number;
+  purchaseMonth: number;
+}
+
+export class ApiError extends Error {
+  status?: number;
+  constructor(message: string, status?: number) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+  }
+}
+
+async function authHeader(): Promise<Record<string, string>> {
+  const { tokens } = await fetchAuthSession();
+  const idToken = tokens?.idToken?.toString();
+  if (!idToken) throw new ApiError("Not authenticated", 401);
+  return { Authorization: `Bearer ${idToken}` };
+}
+
+export async function fetchItems(): Promise<Item[]> {
+  const headers = await authHeader();
+  const res = await fetch("/api/items", { headers });
+  if (!res.ok) throw new ApiError(`Request failed (${res.status})`, res.status);
+  const body = (await res.json()) as { items?: Item[] };
+  if (!body || !Array.isArray(body.items)) {
+    throw new ApiError("Malformed response");
+  }
+  return body.items;
+}

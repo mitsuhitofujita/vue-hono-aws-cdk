@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import HomeView from "./views/HomeView.vue";
+import { useRoute } from "vue-router";
+import AppHeader from "./components/AppHeader.vue";
 import AppFooter from "./components/AppFooter.vue";
+
+const route = useRoute();
 </script>
 
 <template>
-  <HomeView />
+  <AppHeader v-if="route.meta.showAppHeader" />
+  <RouterView />
   <AppFooter />
 </template>

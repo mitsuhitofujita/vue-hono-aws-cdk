@@ -112,12 +112,12 @@ const { user, isAuthenticated, isLoading, signInWithGoogle, signOut } =
         </div>
 
         <div class="mt-6 pt-4 border-t border-stone-100 space-y-3">
-          <a
-            href="/items"
+          <RouterLink
+            to="/items"
             class="block w-full bg-primary-600 hover:bg-primary-700 text-white py-2.5 text-sm font-medium tracking-wide uppercase transition-colors text-center"
           >
             Items
-          </a>
+          </RouterLink>
           <button
             type="button"
             class="w-full border border-stone-300 hover:border-stone-400 py-2.5 text-sm font-medium text-stone-600 hover:text-stone-700 tracking-wide uppercase transition-colors"

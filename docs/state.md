@@ -51,17 +51,35 @@
     - Added `DistributionApiOriginStack` for the CloudFront `/api/*` behavior
     - Replaced CloudFront SPA fallback `errorResponses` with a CloudFront Function on the default behavior so API responses are not rewritten
     - Broke the AuthClient/Distribution/BackendApi 3-stack circular dependency by deferring CloudFront-domain OAuth callback updates to a new `AuthClientCallbackStack` (uses an `AwsCustomResource` calling `cognito-idp:UpdateUserPoolClient`)
+- Wire the frontend to the backend and render the response JSON on the page
+    - Calls `GET /api/items` from the SPA and renders the returned items
+    - Sends `Authorization: Bearer <idToken>` (Cognito ID token, matching the HTTP API JWT authorizer audience)
+    - Response body shape (mock):
+      ```json
+      { "items": [
+        { "itemId": "i1", "name": "エアコン", "purchaseYear": 2026, "purchaseMonth": 3 },
+        { "itemId": "i2", "name": "冷蔵庫", "purchaseYear": 2025, "purchaseMonth": 11 },
+        { "itemId": "i3", "name": "洗濯機", "purchaseYear": 2024, "purchaseMonth": 6 }
+      ] }
+      ```
+- Item list page implementation (initial)
+    - `/items` route added via `vue-router`; auth-guarded (unauthenticated users redirect to `/`)
+    - Layout matches `docs/html/item-list.html` (header with avatar, page header, ADD button, list, pagination UI)
+    - Avatar slide-in nav menu deferred — the avatar currently links back to `/`
+    - ADD button rendered but inert
+    - Pagination UI rendered but inert (backend has no pagination yet); shows `1 / 1`
 
 ## In Progress
 
-- Backend access to DynamoDB
-
 ## Planned (not yet started)
 
+- Backend access to DynamoDB
+    - Read from DynamoDB and return its contents in the response
+    - Scope: `/api/items` only
+    - Expected result: empty
 - Backend feature tests running locally against a local DynamoDB
-    - Isolate the Lambda layer and run tests that exercise storage
+    - Decouple the Lambda runtime layer so tests can exercise the storage layer
 - Linter integration
-- Item list page implementation
 - Item create page implementation
-- Frontend refactoring with component architecture
+- Frontend refactoring with component architecture in mind
 - Backend implementation

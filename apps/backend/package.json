@@ -8,6 +8,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.668.0",
+    "@aws-sdk/lib-dynamodb": "^3.668.0",
     "hono": "^4.0.0"
   },
   "devDependencies": {

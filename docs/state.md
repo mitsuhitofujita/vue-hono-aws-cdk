@@ -62,7 +62,7 @@
         { "itemId": "i3", "name": "洗濯機", "purchaseYear": 2024, "purchaseMonth": 6 }
       ] }
       ```
-- Item list page implementation (initial)
+- Item list page implementation
     - `/items` route added via `vue-router`; auth-guarded (unauthenticated users redirect to `/`)
     - Layout matches `docs/html/item-list.html` (header with avatar, page header, ADD button, list, pagination UI)
     - Avatar slide-in nav menu deferred — the avatar currently links back to `/`
@@ -71,15 +71,15 @@
 
 ## In Progress
 
-## Planned (not yet started)
-
 - Backend access to DynamoDB
     - Read from DynamoDB and return its contents in the response
     - Scope: `/api/items` only
     - Expected result: empty
+
+## Planned (not yet started)
+
 - Backend feature tests running locally against a local DynamoDB
     - Decouple the Lambda runtime layer so tests can exercise the storage layer
 - Linter integration
 - Item create page implementation
 - Frontend refactoring with component architecture in mind
-- Backend implementation

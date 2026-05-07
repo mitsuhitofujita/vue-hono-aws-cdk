@@ -40,46 +40,34 @@
         - Located in the `apps/backend` directory
     - Implement the item list API returning an empty (or dummy) item list
 - Split the user pool client out of the Cognito stack
-    - `AuthStack` no longer depends on the CloudFront `Distribution`
-- Split the S3 bucket policy out of the CloudFront stack
-    - Introduced `WebsiteOriginAccessStack` for the OAC bucket policy
-    - `StorageStack` and `DistributionStack` no longer have a cross-stack reference
+    - `AuthStack` no longer depends on the `Distribution`
+- CDK refactoring
+    - CloudFront previously depended on S3 via cross-stack references
+    - Decompose into three stages — S3 creation, CloudFront creation, and the association between them — to eliminate the dependency
 - Backend Lambda resource provisioning
-    - Added `BackendStack` for the Lambda function (NodejsFunction with esbuild)
-    - Added `BackendDataAccessStack` to grant the Lambda DynamoDB access
-    - Added `BackendApiStack` for HTTP API + Cognito JWT authorizer + Lambda proxy integration
-    - Added `DistributionApiOriginStack` for the CloudFront `/api/*` behavior
-    - Replaced CloudFront SPA fallback `errorResponses` with a CloudFront Function on the default behavior so API responses are not rewritten
-    - Broke the AuthClient/Distribution/BackendApi 3-stack circular dependency by deferring CloudFront-domain OAuth callback updates to a new `AuthClientCallbackStack` (uses an `AwsCustomResource` calling `cognito-idp:UpdateUserPoolClient`)
-- Wire the frontend to the backend and render the response JSON on the page
-    - Calls `GET /api/items` from the SPA and renders the returned items
-    - Sends `Authorization: Bearer <idToken>` (Cognito ID token, matching the HTTP API JWT authorizer audience)
-    - Response body shape (mock):
-      ```json
-      { "items": [
-        { "itemId": "i1", "name": "エアコン", "purchaseYear": 2026, "purchaseMonth": 3 },
-        { "itemId": "i2", "name": "冷蔵庫", "purchaseYear": 2025, "purchaseMonth": 11 },
-        { "itemId": "i3", "name": "洗濯機", "purchaseYear": 2024, "purchaseMonth": 6 }
-      ] }
-      ```
+    - Add backend stacks under `infra/cdk`
+    - Use an HTTP API JWT authorizer for signature and expiry validation
+        - Cognito JWT authorizer integration
+- Call the backend from the frontend and render the response JSON on the page
+    - Request `/api/items` and render the returned JSON
 - Item list page implementation
-    - `/items` route added via `vue-router`; auth-guarded (unauthenticated users redirect to `/`)
-    - Layout matches `docs/html/item-list.html` (header with avatar, page header, ADD button, list, pagination UI)
-    - Avatar slide-in nav menu deferred — the avatar currently links back to `/`
-    - ADD button rendered but inert
-    - Pagination UI rendered but inert (backend has no pagination yet); shows `1 / 1`
-
-## In Progress
-
+    - Core features only
 - Backend access to DynamoDB
     - Read from DynamoDB and return its contents in the response
     - Scope: `/api/items` only
     - Expected result: empty
 
+## In Progress
+
+- Item create page implementation
+- Item list page feature additions
+    - ADD button
+
 ## Planned (not yet started)
 
+- Item list page implementation
+    - Avatar menu, pagination, sorting
 - Backend feature tests running locally against a local DynamoDB
     - Decouple the Lambda runtime layer so tests can exercise the storage layer
 - Linter integration
-- Item create page implementation
 - Frontend refactoring with component architecture in mind

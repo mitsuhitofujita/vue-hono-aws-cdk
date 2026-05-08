@@ -170,6 +170,7 @@ Attributes:
 | Method | Path | Description |
 |---|---|---|
 | GET | `/api/items` | List items |
+| GET | `/api/items/:id` | Get a single item |
 | POST | `/api/items` | Create an item |
 | PUT | `/api/items/:id` | Update an item |
 | DELETE | `/api/items/:id` | Delete an item |

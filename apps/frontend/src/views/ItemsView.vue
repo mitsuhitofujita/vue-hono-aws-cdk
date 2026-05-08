@@ -89,12 +89,32 @@ onMounted(async () => {
         <li v-for="item in items" :key="item.itemId">
           <RouterLink
             :to="{ name: 'items-detail', params: { itemId: item.itemId } }"
-            class="flex items-baseline justify-between px-4 py-4 hover:bg-primary-50 transition-colors"
+            class="flex items-baseline justify-between gap-3 px-4 py-4 hover:bg-primary-50 transition-colors"
           >
-            <span class="text-sm text-stone-800 font-medium">{{
-              item.name
-            }}</span>
-            <span class="font-logo text-xs text-stone-500 tracking-wider">
+            <span class="flex items-baseline gap-2 min-w-0">
+              <span
+                class="text-sm font-medium truncate"
+                :class="
+                  item.disposalYear && item.disposalMonth
+                    ? 'text-stone-400'
+                    : 'text-stone-800'
+                "
+                >{{ item.name }}</span
+              >
+              <span
+                v-if="item.disposalYear && item.disposalMonth"
+                class="font-logo text-[10px] tracking-widest uppercase text-stone-500 border border-stone-300 px-1.5 py-0.5 leading-none whitespace-nowrap"
+                >Disposed</span
+              >
+            </span>
+            <span
+              class="font-logo text-xs tracking-wider whitespace-nowrap"
+              :class="
+                item.disposalYear && item.disposalMonth
+                  ? 'text-stone-400'
+                  : 'text-stone-500'
+              "
+            >
               {{ formatYearMonth(item.purchaseYear, item.purchaseMonth) }}
             </span>
           </RouterLink>

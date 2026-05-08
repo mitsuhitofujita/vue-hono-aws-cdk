@@ -11,10 +11,6 @@ const isLoading = ref(true);
 const errorMessage = ref<string | null>(null);
 const notFound = ref(false);
 
-const now = new Date();
-const refYear = now.getFullYear();
-const refMonth = now.getMonth() + 1;
-
 function formatYearMonth(year: number, month: number): string {
   return `${year}.${String(month).padStart(2, "0")}`;
 }
@@ -26,15 +22,38 @@ function formatYen(n: number): string {
 function monthsInOperation(
   purchaseYear: number,
   purchaseMonth: number,
+  refYear: number,
+  refMonth: number,
 ): number {
   const diff =
     (refYear - purchaseYear) * 12 + (refMonth - purchaseMonth) + 1;
   return diff < 1 ? 1 : diff;
 }
 
+const isDisposed = computed(
+  () => !!(item.value?.disposalYear && item.value?.disposalMonth),
+);
+
+const referenceDate = computed(() => {
+  if (
+    item.value &&
+    item.value.disposalYear &&
+    item.value.disposalMonth
+  ) {
+    return { year: item.value.disposalYear, month: item.value.disposalMonth };
+  }
+  const now = new Date();
+  return { year: now.getFullYear(), month: now.getMonth() + 1 };
+});
+
 const months = computed(() =>
   item.value
-    ? monthsInOperation(item.value.purchaseYear, item.value.purchaseMonth)
+    ? monthsInOperation(
+        item.value.purchaseYear,
+        item.value.purchaseMonth,
+        referenceDate.value.year,
+        referenceDate.value.month,
+      )
     : 0,
 );
 
@@ -106,12 +125,26 @@ onMounted(async () => {
 
       <template v-else-if="item">
         <div class="bg-white border-t border-b border-stone-200 px-4 py-4">
-          <p
-            class="font-logo text-xs tracking-wider text-stone-400 uppercase mb-1"
-          >
-            Name
-          </p>
-          <p class="text-base text-stone-800 font-medium">{{ item.name }}</p>
+          <div class="flex items-center justify-between gap-2">
+            <div class="min-w-0">
+              <p
+                class="font-logo text-xs tracking-wider text-stone-400 uppercase mb-1"
+              >
+                Name
+              </p>
+              <p
+                class="text-base font-medium truncate"
+                :class="isDisposed ? 'text-stone-500' : 'text-stone-800'"
+              >
+                {{ item.name }}
+              </p>
+            </div>
+            <span
+              v-if="isDisposed"
+              class="font-logo text-[10px] tracking-widest uppercase text-stone-500 border border-stone-300 px-1.5 py-0.5 leading-none whitespace-nowrap"
+              >Disposed</span
+            >
+          </div>
         </div>
 
         <dl
@@ -137,31 +170,61 @@ onMounted(async () => {
               {{ formatYearMonth(item.purchaseYear, item.purchaseMonth) }}
             </dd>
           </div>
+          <div
+            v-if="isDisposed && item.disposalYear && item.disposalMonth"
+            class="flex items-baseline justify-between px-4 py-4"
+          >
+            <dt
+              class="font-logo text-xs tracking-wider text-stone-400 uppercase"
+            >
+              Disposal Date
+            </dt>
+            <dd class="font-logo text-sm text-stone-800 tracking-wider">
+              {{ formatYearMonth(item.disposalYear, item.disposalMonth) }}
+            </dd>
+          </div>
         </dl>
 
-        <div class="mt-6 border-2 border-primary-700 bg-primary-50 px-4 py-5">
+        <div
+          class="mt-6 border-2 px-4 py-5"
+          :class="
+            isDisposed
+              ? 'border-stone-400 bg-stone-100'
+              : 'border-primary-700 bg-primary-50'
+          "
+        >
+          <div class="flex items-center justify-center gap-2 mb-2">
+            <p
+              class="font-logo text-xs tracking-wider uppercase"
+              :class="isDisposed ? 'text-stone-500' : 'text-primary-700'"
+            >
+              Cost per Month
+            </p>
+            <span
+              v-if="isDisposed"
+              class="font-logo text-[10px] tracking-widest uppercase text-stone-500 border border-stone-400 px-1.5 py-0.5 leading-none whitespace-nowrap"
+              >Final</span
+            >
+          </div>
           <p
-            class="font-logo text-xs tracking-wider text-primary-700 uppercase mb-2 text-center"
-          >
-            Cost per Month
-          </p>
-          <p
-            class="font-logo text-3xl text-primary-800 tracking-wider text-center"
+            class="font-logo text-3xl tracking-wider text-center"
+            :class="isDisposed ? 'text-stone-600' : 'text-primary-800'"
           >
             {{ formatYen(costPerMonth) }}
           </p>
           <p
-            class="font-logo text-xs tracking-wider text-primary-600 uppercase mt-2 text-center"
+            class="font-logo text-xs tracking-wider uppercase mt-2 text-center"
+            :class="isDisposed ? 'text-stone-500' : 'text-primary-600'"
           >
-            {{ formatYearMonth(refYear, refMonth) }} / Month {{ months }}
+            {{ formatYearMonth(referenceDate.year, referenceDate.month) }} /
+            Month {{ months }}{{ isDisposed ? " (disposed)" : "" }}
           </p>
         </div>
 
         <div class="mt-6 flex justify-end">
-          <button
-            type="button"
-            disabled
-            class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 text-white px-4 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          <RouterLink
+            :to="{ name: 'items-edit', params: { itemId: item.itemId } }"
+            class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 transition-colors"
           >
             <svg
               class="w-4 h-4"
@@ -177,7 +240,7 @@ onMounted(async () => {
               />
             </svg>
             <span class="font-logo text-xs tracking-widest uppercase">Edit</span>
-          </button>
+          </RouterLink>
         </div>
       </template>
     </div>

@@ -1,7 +1,11 @@
 import { Hono } from "hono";
 import type { Context } from "hono";
 import type { LambdaEvent } from "hono/aws-lambda";
-import { createItem, listItemsByUser } from "./items-repository.js";
+import {
+  createItem,
+  getItemForUser,
+  listItemsByUser,
+} from "./items-repository.js";
 
 type Bindings = {
   event: LambdaEvent;
@@ -36,6 +40,21 @@ app.get("/api/items", async (c) => {
   );
 
   return c.json({ items });
+});
+
+app.get("/api/items/:id", async (c) => {
+  const sub = getUserSub(c);
+  if (!sub) {
+    return c.json({ message: "Unauthorized" }, 401);
+  }
+
+  const itemId = c.req.param("id");
+  const item = await getItemForUser(sub, itemId);
+  if (!item) {
+    return c.json({ message: "Not found" }, 404);
+  }
+
+  return c.json({ item });
 });
 
 app.post("/api/items", async (c) => {

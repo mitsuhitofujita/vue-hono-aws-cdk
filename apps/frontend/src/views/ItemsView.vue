@@ -87,8 +87,8 @@ onMounted(async () => {
         class="border-t border-b border-stone-200 divide-y divide-stone-100 bg-white"
       >
         <li v-for="item in items" :key="item.itemId">
-          <a
-            href="#"
+          <RouterLink
+            :to="{ name: 'items-detail', params: { itemId: item.itemId } }"
             class="flex items-baseline justify-between px-4 py-4 hover:bg-primary-50 transition-colors"
           >
             <span class="text-sm text-stone-800 font-medium">{{
@@ -97,7 +97,7 @@ onMounted(async () => {
             <span class="font-logo text-xs text-stone-500 tracking-wider">
               {{ formatYearMonth(item.purchaseYear, item.purchaseMonth) }}
             </span>
-          </a>
+          </RouterLink>
         </li>
       </ul>
 

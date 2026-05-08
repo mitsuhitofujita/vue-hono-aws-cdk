@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   DynamoDBDocumentClient,
+  GetCommand,
   PutCommand,
   QueryCommand,
 } from "@aws-sdk/lib-dynamodb";
@@ -56,6 +57,34 @@ export async function listItemsByUser(userId: string): Promise<Item[]> {
     items.push({ itemId, name, purchaseYear, purchaseMonth, purchasePrice });
   }
   return items;
+}
+
+export async function getItemForUser(
+  userId: string,
+  itemId: string,
+): Promise<Item | null> {
+  const result = await documentClient.send(
+    new GetCommand({
+      TableName: tableName,
+      Key: { userId, itemId },
+    }),
+  );
+  const raw = result.Item;
+  if (!raw) return null;
+
+  const name = raw.name;
+  const purchaseYear = Number(raw.purchaseYear);
+  const purchaseMonth = Number(raw.purchaseMonth);
+  const purchasePrice = Number(raw.purchasePrice);
+  if (
+    typeof name !== "string" ||
+    !Number.isFinite(purchaseYear) ||
+    !Number.isFinite(purchaseMonth) ||
+    !Number.isFinite(purchasePrice)
+  ) {
+    return null;
+  }
+  return { itemId, name, purchaseYear, purchaseMonth, purchasePrice };
 }
 
 export async function createItem(

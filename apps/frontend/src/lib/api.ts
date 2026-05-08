@@ -42,6 +42,19 @@ export async function fetchItems(): Promise<Item[]> {
   return body.items;
 }
 
+export async function fetchItem(itemId: string): Promise<Item> {
+  const headers = await authHeader();
+  const res = await fetch(`/api/items/${encodeURIComponent(itemId)}`, {
+    headers,
+  });
+  if (!res.ok) throw new ApiError(`Request failed (${res.status})`, res.status);
+  const body = (await res.json()) as { item?: Item };
+  if (!body || !body.item || typeof body.item.itemId !== "string") {
+    throw new ApiError("Malformed response");
+  }
+  return body.item;
+}
+
 export async function createItem(input: CreateItemInput): Promise<Item> {
   const headers = {
     ...(await authHeader()),

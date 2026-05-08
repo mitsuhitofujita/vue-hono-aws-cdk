@@ -4,6 +4,7 @@ import { useAuth } from "../composables/useAuth";
 
 const HomeView = () => import("../views/HomeView.vue");
 const ItemsView = () => import("../views/ItemsView.vue");
+const ItemCreateView = () => import("../views/ItemCreateView.vue");
 
 const router = createRouter({
   history: createWebHistory(),
@@ -18,6 +19,12 @@ const router = createRouter({
       path: "/items",
       name: "items",
       component: ItemsView,
+      meta: { requiresAuth: true, showAppHeader: true },
+    },
+    {
+      path: "/items/create",
+      name: "items-create",
+      component: ItemCreateView,
       meta: { requiresAuth: true, showAppHeader: true },
     },
     { path: "/:pathMatch(.*)*", redirect: { name: "home" } },

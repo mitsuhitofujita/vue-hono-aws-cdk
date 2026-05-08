@@ -39,11 +39,9 @@ onMounted(async () => {
       </div>
 
       <div class="mb-6 flex justify-end">
-        <button
-          type="button"
-          disabled
-          aria-disabled="true"
-          class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        <RouterLink
+          :to="{ name: 'items-create' }"
+          class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 transition-colors"
         >
           <svg
             class="w-4 h-4"
@@ -59,7 +57,7 @@ onMounted(async () => {
             />
           </svg>
           <span class="font-logo text-xs tracking-widest uppercase">Add</span>
-        </button>
+        </RouterLink>
       </div>
 
       <div

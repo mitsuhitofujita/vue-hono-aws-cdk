@@ -56,18 +56,28 @@
     - Read from DynamoDB and return its contents in the response
     - Scope: `/api/items` only
     - Expected result: empty
-
-## In Progress
-
 - Item create page implementation
 - Item list page feature additions
     - ADD button
+- Item detail page implementation
+- Navigation from the item list page to the item detail page
+    - Rely on the browser's native back navigation; no in-app back link is provided
+
+## In Progress
+
+- Item edit page implementation
+- Item detail page implementation
+    - Support for the disposal date (year and month)
+        - When the disposal date is set, the average fixed cost is fixed at the value computed as of the disposal month
+- Item list page implementation
+    - Indicate whether each item has been disposed of
 
 ## Planned (not yet started)
 
 - Item list page implementation
-    - Avatar menu, pagination, sorting
+    - Account menu, pagination, sorting
 - Backend feature tests running locally against a local DynamoDB
     - Decouple the Lambda runtime layer so tests can exercise the storage layer
 - Linter integration
 - Frontend refactoring with component architecture in mind
+- Input validation with zod

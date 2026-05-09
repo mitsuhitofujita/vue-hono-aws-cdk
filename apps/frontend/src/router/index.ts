@@ -7,6 +7,7 @@ const ItemsView = () => import("../views/ItemsView.vue");
 const ItemCreateView = () => import("../views/ItemCreateView.vue");
 const ItemDetailView = () => import("../views/ItemDetailView.vue");
 const ItemEditView = () => import("../views/ItemEditView.vue");
+const NotFoundView = () => import("../views/NotFoundView.vue");
 
 const router = createRouter({
   history: createWebHistory(),
@@ -41,7 +42,12 @@ const router = createRouter({
       component: ItemEditView,
       meta: { requiresAuth: true, showAppHeader: true },
     },
-    { path: "/:pathMatch(.*)*", redirect: { name: "home" } },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      component: NotFoundView,
+      meta: { requiresAuth: false, showAppHeader: true },
+    },
   ],
 });
 

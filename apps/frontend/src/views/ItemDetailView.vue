@@ -9,7 +9,6 @@ const router = useRouter();
 const item = ref<Item | null>(null);
 const isLoading = ref(true);
 const errorMessage = ref<string | null>(null);
-const notFound = ref(false);
 
 function formatYearMonth(year: number, month: number): string {
   return `${year}.${String(month).padStart(2, "0")}`;
@@ -66,8 +65,7 @@ onMounted(async () => {
     ? route.params.itemId[0]
     : route.params.itemId;
   if (!itemId) {
-    notFound.value = true;
-    isLoading.value = false;
+    void router.replace({ name: "not-found" });
     return;
   }
   try {
@@ -78,7 +76,7 @@ onMounted(async () => {
       return;
     }
     if (e instanceof ApiError && e.status === 404) {
-      notFound.value = true;
+      void router.replace({ name: "not-found" });
       return;
     }
     errorMessage.value =
@@ -105,14 +103,6 @@ onMounted(async () => {
         class="border-t border-b border-stone-200 bg-white"
       >
         <div class="px-4 py-4 text-sm text-stone-400">Loading...</div>
-      </div>
-
-      <div
-        v-else-if="notFound"
-        role="alert"
-        class="border-t border-b border-stone-200 bg-white px-4 py-4 text-sm text-stone-600"
-      >
-        Item not found.
       </div>
 
       <div

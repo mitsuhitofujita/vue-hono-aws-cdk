@@ -22,7 +22,6 @@ const isLoading = ref(true);
 const isSubmitting = ref(false);
 const isDeleting = ref(false);
 const errorMessage = ref<string | null>(null);
-const notFound = ref(false);
 const confirmingDelete = ref(false);
 
 function parseYearMonth(
@@ -46,8 +45,7 @@ onMounted(async () => {
     ? route.params.itemId[0]
     : route.params.itemId;
   if (!rawId) {
-    notFound.value = true;
-    isLoading.value = false;
+    void router.replace({ name: "not-found" });
     return;
   }
   itemId.value = rawId;
@@ -73,7 +71,7 @@ onMounted(async () => {
       return;
     }
     if (e instanceof ApiError && e.status === 404) {
-      notFound.value = true;
+      void router.replace({ name: "not-found" });
       return;
     }
     errorMessage.value =
@@ -138,6 +136,10 @@ async function onSubmit() {
       void router.replace({ name: "home" });
       return;
     }
+    if (e instanceof ApiError && e.status === 404) {
+      void router.replace({ name: "not-found" });
+      return;
+    }
     errorMessage.value =
       e instanceof Error ? e.message : "Failed to update item";
   } finally {
@@ -165,6 +167,10 @@ async function onConfirmDelete() {
       void router.replace({ name: "home" });
       return;
     }
+    if (e instanceof ApiError && e.status === 404) {
+      void router.replace({ name: "not-found" });
+      return;
+    }
     errorMessage.value =
       e instanceof Error ? e.message : "Failed to delete item";
     isDeleting.value = false;
@@ -188,14 +194,6 @@ async function onConfirmDelete() {
         class="border-t border-b border-stone-200 bg-white"
       >
         <div class="px-4 py-4 text-sm text-stone-400">Loading...</div>
-      </div>
-
-      <div
-        v-else-if="notFound"
-        role="alert"
-        class="border-t border-b border-stone-200 bg-white px-4 py-4 text-sm text-stone-600"
-      >
-        Item not found.
       </div>
 
       <template v-else>

@@ -43,12 +43,7 @@ onMounted(async () => {
           :to="{ name: 'items-create' }"
           class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 transition-colors"
         >
-          <svg
-            class="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="square"
               stroke-linejoin="miter"
@@ -60,10 +55,7 @@ onMounted(async () => {
         </RouterLink>
       </div>
 
-      <div
-        v-if="isLoading"
-        class="border-t border-b border-stone-200 bg-white"
-      >
+      <div v-if="isLoading" class="border-t border-b border-stone-200 bg-white">
         <div class="px-4 py-4 text-sm text-stone-400">Loading...</div>
       </div>
 
@@ -75,17 +67,11 @@ onMounted(async () => {
         {{ errorMessage }}
       </div>
 
-      <ul
-        v-else-if="items.length === 0"
-        class="border-t border-b border-stone-200 bg-white"
-      >
+      <ul v-else-if="items.length === 0" class="border-t border-b border-stone-200 bg-white">
         <li class="px-4 py-4 text-sm text-stone-400">No items yet.</li>
       </ul>
 
-      <ul
-        v-else
-        class="border-t border-b border-stone-200 divide-y divide-stone-100 bg-white"
-      >
+      <ul v-else class="border-t border-b border-stone-200 divide-y divide-stone-100 bg-white">
         <li v-for="item in items" :key="item.itemId">
           <RouterLink
             :to="{ name: 'items-detail', params: { itemId: item.itemId } }"
@@ -95,9 +81,7 @@ onMounted(async () => {
               <span
                 class="text-sm font-medium truncate"
                 :class="
-                  item.disposalYear && item.disposalMonth
-                    ? 'text-stone-400'
-                    : 'text-stone-800'
+                  item.disposalYear && item.disposalMonth ? 'text-stone-400' : 'text-stone-800'
                 "
                 >{{ item.name }}</span
               >
@@ -109,11 +93,7 @@ onMounted(async () => {
             </span>
             <span
               class="font-logo text-xs tracking-wider whitespace-nowrap"
-              :class="
-                item.disposalYear && item.disposalMonth
-                  ? 'text-stone-400'
-                  : 'text-stone-500'
-              "
+              :class="item.disposalYear && item.disposalMonth ? 'text-stone-400' : 'text-stone-500'"
             >
               {{ formatYearMonth(item.purchaseYear, item.purchaseMonth) }}
             </span>
@@ -128,12 +108,7 @@ onMounted(async () => {
           aria-label="Previous page"
           class="w-10 h-10 rounded-full border border-stone-300 text-stone-500 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed"
         >
-          <svg
-            class="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="square"
               stroke-linejoin="miter"
@@ -142,21 +117,14 @@ onMounted(async () => {
             />
           </svg>
         </button>
-        <span class="font-logo text-xs tracking-widest text-stone-500"
-          >1 / 1</span
-        >
+        <span class="font-logo text-xs tracking-widest text-stone-500">1 / 1</span>
         <button
           type="button"
           disabled
           aria-label="Next page"
           class="w-10 h-10 rounded-full border border-stone-300 text-stone-500 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed"
         >
-          <svg
-            class="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="square"
               stroke-linejoin="miter"

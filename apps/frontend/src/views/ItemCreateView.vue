@@ -6,9 +6,7 @@ import { ApiError, createItem } from "../lib/api";
 const router = useRouter();
 
 const today = new Date();
-const defaultMonth = `${today.getFullYear()}-${String(
-  today.getMonth() + 1,
-).padStart(2, "0")}`;
+const defaultMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
 
 const name = ref("");
 const purchaseDate = ref(defaultMonth);
@@ -17,9 +15,7 @@ const purchasePrice = ref<number | null>(null);
 const isSubmitting = ref(false);
 const errorMessage = ref<string | null>(null);
 
-function parseYearMonth(
-  value: string,
-): { year: number; month: number } | null {
+function parseYearMonth(value: string): { year: number; month: number } | null {
   const m = /^(\d{4})-(\d{2})$/.exec(value);
   if (!m) return null;
   const year = Number(m[1]);
@@ -62,8 +58,7 @@ async function onSubmit() {
       void router.replace({ name: "home" });
       return;
     }
-    errorMessage.value =
-      e instanceof Error ? e.message : "Failed to create item";
+    errorMessage.value = e instanceof Error ? e.message : "Failed to create item";
   } finally {
     isSubmitting.value = false;
   }
@@ -98,9 +93,7 @@ async function onSubmit() {
           />
         </div>
 
-        <div
-          class="mt-6 bg-white border-t border-b border-stone-200 px-4 py-4"
-        >
+        <div class="mt-6 bg-white border-t border-b border-stone-200 px-4 py-4">
           <label
             for="purchase-price"
             class="block font-logo text-xs tracking-wider text-stone-400 uppercase mb-2"
@@ -122,9 +115,7 @@ async function onSubmit() {
           </div>
         </div>
 
-        <div
-          class="mt-6 bg-white border-t border-b border-stone-200 px-4 py-4"
-        >
+        <div class="mt-6 bg-white border-t border-b border-stone-200 px-4 py-4">
           <label
             for="purchase-date"
             class="block font-logo text-xs tracking-wider text-stone-400 uppercase mb-2"
@@ -153,12 +144,7 @@ async function onSubmit() {
             :disabled="isSubmitting"
             class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="square"
                 stroke-linejoin="miter"
@@ -166,9 +152,7 @@ async function onSubmit() {
                 d="M5 13l4 4L19 7"
               />
             </svg>
-            <span class="font-logo text-xs tracking-widest uppercase"
-              >Apply</span
-            >
+            <span class="font-logo text-xs tracking-widest uppercase">Apply</span>
           </button>
         </div>
       </form>

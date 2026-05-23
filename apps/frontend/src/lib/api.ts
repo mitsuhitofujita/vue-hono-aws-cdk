@@ -84,10 +84,7 @@ export async function createItem(input: CreateItemInput): Promise<Item> {
   return body.item;
 }
 
-export async function updateItem(
-  itemId: string,
-  input: UpdateItemInput,
-): Promise<Item> {
+export async function updateItem(itemId: string, input: UpdateItemInput): Promise<Item> {
   const headers = {
     ...(await authHeader()),
     "Content-Type": "application/json",

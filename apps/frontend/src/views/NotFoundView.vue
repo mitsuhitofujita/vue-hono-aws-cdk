@@ -24,12 +24,7 @@ import { RouterLink } from "vue-router";
           :to="{ name: 'home' }"
           class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 transition-colors"
         >
-          <svg
-            class="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="square"
               stroke-linejoin="miter"
@@ -37,9 +32,7 @@ import { RouterLink } from "vue-router";
               d="M3 12l9-9 9 9M5 10v10h4v-6h6v6h4V10"
             />
           </svg>
-          <span class="font-logo text-xs tracking-widest uppercase"
-            >Back to home</span
-          >
+          <span class="font-logo text-xs tracking-widest uppercase">Back to home</span>
         </RouterLink>
       </div>
     </div>

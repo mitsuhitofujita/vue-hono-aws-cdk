@@ -24,21 +24,14 @@ function monthsInOperation(
   refYear: number,
   refMonth: number,
 ): number {
-  const diff =
-    (refYear - purchaseYear) * 12 + (refMonth - purchaseMonth) + 1;
+  const diff = (refYear - purchaseYear) * 12 + (refMonth - purchaseMonth) + 1;
   return diff < 1 ? 1 : diff;
 }
 
-const isDisposed = computed(
-  () => !!(item.value?.disposalYear && item.value?.disposalMonth),
-);
+const isDisposed = computed(() => !!(item.value?.disposalYear && item.value?.disposalMonth));
 
 const referenceDate = computed(() => {
-  if (
-    item.value &&
-    item.value.disposalYear &&
-    item.value.disposalMonth
-  ) {
+  if (item.value && item.value.disposalYear && item.value.disposalMonth) {
     return { year: item.value.disposalYear, month: item.value.disposalMonth };
   }
   const now = new Date();
@@ -61,9 +54,7 @@ const costPerMonth = computed(() =>
 );
 
 onMounted(async () => {
-  const itemId = Array.isArray(route.params.itemId)
-    ? route.params.itemId[0]
-    : route.params.itemId;
+  const itemId = Array.isArray(route.params.itemId) ? route.params.itemId[0] : route.params.itemId;
   if (!itemId) {
     void router.replace({ name: "not-found" });
     return;
@@ -79,8 +70,7 @@ onMounted(async () => {
       void router.replace({ name: "not-found" });
       return;
     }
-    errorMessage.value =
-      e instanceof Error ? e.message : "Failed to load item";
+    errorMessage.value = e instanceof Error ? e.message : "Failed to load item";
   } finally {
     isLoading.value = false;
   }
@@ -98,10 +88,7 @@ onMounted(async () => {
         </h1>
       </div>
 
-      <div
-        v-if="isLoading"
-        class="border-t border-b border-stone-200 bg-white"
-      >
+      <div v-if="isLoading" class="border-t border-b border-stone-200 bg-white">
         <div class="px-4 py-4 text-sm text-stone-400">Loading...</div>
       </div>
 
@@ -117,11 +104,7 @@ onMounted(async () => {
         <div class="bg-white border-t border-b border-stone-200 px-4 py-4">
           <div class="flex items-center justify-between gap-2">
             <div class="min-w-0">
-              <p
-                class="font-logo text-xs tracking-wider text-stone-400 uppercase mb-1"
-              >
-                Name
-              </p>
+              <p class="font-logo text-xs tracking-wider text-stone-400 uppercase mb-1">Name</p>
               <p
                 class="text-base font-medium truncate"
                 :class="isDisposed ? 'text-stone-500' : 'text-stone-800'"
@@ -137,13 +120,9 @@ onMounted(async () => {
           </div>
         </div>
 
-        <dl
-          class="mt-6 bg-white border-t border-b border-stone-200 divide-y divide-stone-100"
-        >
+        <dl class="mt-6 bg-white border-t border-b border-stone-200 divide-y divide-stone-100">
           <div class="flex items-baseline justify-between px-4 py-4">
-            <dt
-              class="font-logo text-xs tracking-wider text-stone-400 uppercase"
-            >
+            <dt class="font-logo text-xs tracking-wider text-stone-400 uppercase">
               Purchase Price
             </dt>
             <dd class="font-logo text-sm text-stone-800 tracking-wider">
@@ -151,11 +130,7 @@ onMounted(async () => {
             </dd>
           </div>
           <div class="flex items-baseline justify-between px-4 py-4">
-            <dt
-              class="font-logo text-xs tracking-wider text-stone-400 uppercase"
-            >
-              Purchase Date
-            </dt>
+            <dt class="font-logo text-xs tracking-wider text-stone-400 uppercase">Purchase Date</dt>
             <dd class="font-logo text-sm text-stone-800 tracking-wider">
               {{ formatYearMonth(item.purchaseYear, item.purchaseMonth) }}
             </dd>
@@ -164,11 +139,7 @@ onMounted(async () => {
             v-if="isDisposed && item.disposalYear && item.disposalMonth"
             class="flex items-baseline justify-between px-4 py-4"
           >
-            <dt
-              class="font-logo text-xs tracking-wider text-stone-400 uppercase"
-            >
-              Disposal Date
-            </dt>
+            <dt class="font-logo text-xs tracking-wider text-stone-400 uppercase">Disposal Date</dt>
             <dd class="font-logo text-sm text-stone-800 tracking-wider">
               {{ formatYearMonth(item.disposalYear, item.disposalMonth) }}
             </dd>
@@ -177,11 +148,7 @@ onMounted(async () => {
 
         <div
           class="mt-6 border-2 px-4 py-5"
-          :class="
-            isDisposed
-              ? 'border-stone-400 bg-stone-100'
-              : 'border-primary-700 bg-primary-50'
-          "
+          :class="isDisposed ? 'border-stone-400 bg-stone-100' : 'border-primary-700 bg-primary-50'"
         >
           <div class="flex items-center justify-center gap-2 mb-2">
             <p
@@ -206,8 +173,8 @@ onMounted(async () => {
             class="font-logo text-xs tracking-wider uppercase mt-2 text-center"
             :class="isDisposed ? 'text-stone-500' : 'text-primary-600'"
           >
-            {{ formatYearMonth(referenceDate.year, referenceDate.month) }} /
-            Month {{ months }}{{ isDisposed ? " (disposed)" : "" }}
+            {{ formatYearMonth(referenceDate.year, referenceDate.month) }} / Month {{ months
+            }}{{ isDisposed ? " (disposed)" : "" }}
           </p>
         </div>
 
@@ -216,12 +183,7 @@ onMounted(async () => {
             :to="{ name: 'items-edit', params: { itemId: item.itemId } }"
             class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 transition-colors"
           >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 stroke-linecap="square"
                 stroke-linejoin="miter"

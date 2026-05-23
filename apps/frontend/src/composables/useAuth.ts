@@ -1,9 +1,5 @@
 import { computed, ref } from "vue";
-import {
-  fetchAuthSession,
-  signInWithRedirect,
-  signOut as amplifySignOut,
-} from "aws-amplify/auth";
+import { fetchAuthSession, signInWithRedirect, signOut as amplifySignOut } from "aws-amplify/auth";
 import { Hub } from "aws-amplify/utils";
 
 export interface AuthUser {
@@ -24,8 +20,7 @@ async function refreshUser(): Promise<void> {
     }
     const name = typeof payload.name === "string" ? payload.name : undefined;
     const email = typeof payload.email === "string" ? payload.email : undefined;
-    const picture =
-      typeof payload.picture === "string" ? payload.picture : undefined;
+    const picture = typeof payload.picture === "string" ? payload.picture : undefined;
     user.value = {
       displayName: name ?? email ?? "",
       picture,

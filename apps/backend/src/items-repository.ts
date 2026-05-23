@@ -1,6 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { ConditionalCheckFailedException } from "@aws-sdk/client-dynamodb";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { ConditionalCheckFailedException, DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import {
   DeleteCommand,
   DynamoDBDocumentClient,
@@ -95,7 +94,8 @@ export async function listItemsByUser(userId: string): Promise<Item[]> {
   );
 
   const items: Item[] = [];
-  for (const raw of result.Items ?? []) {
+  const rawItems = (result.Items ?? []) as Record<string, unknown>[];
+  for (const raw of rawItems) {
     const itemId = raw.itemId;
     if (typeof itemId !== "string") continue;
     const item = toItem(itemId, raw);
@@ -104,10 +104,7 @@ export async function listItemsByUser(userId: string): Promise<Item[]> {
   return items;
 }
 
-export async function getItemForUser(
-  userId: string,
-  itemId: string,
-): Promise<Item | null> {
+export async function getItemForUser(userId: string, itemId: string): Promise<Item | null> {
   const result = await documentClient.send(
     new GetCommand({
       TableName: tableName,
@@ -119,10 +116,7 @@ export async function getItemForUser(
   return toItem(itemId, raw);
 }
 
-export async function createItem(
-  userId: string,
-  input: CreateItemInput,
-): Promise<Item> {
+export async function createItem(userId: string, input: CreateItemInput): Promise<Item> {
   const itemId = randomUUID();
   const item: Item = { itemId, ...input };
   await documentClient.send(
@@ -139,8 +133,7 @@ export async function updateItem(
   itemId: string,
   input: UpdateItemInput,
 ): Promise<Item> {
-  const hasDisposal =
-    input.disposalYear !== undefined && input.disposalMonth !== undefined;
+  const hasDisposal = input.disposalYear !== undefined && input.disposalMonth !== undefined;
 
   const setExpressions = [
     "#name = :name",
@@ -158,10 +151,7 @@ export async function updateItem(
 
   let updateExpression: string;
   if (hasDisposal) {
-    setExpressions.push(
-      "disposalYear = :disposalYear",
-      "disposalMonth = :disposalMonth",
-    );
+    setExpressions.push("disposalYear = :disposalYear", "disposalMonth = :disposalMonth");
     expressionAttributeValues[":disposalYear"] = input.disposalYear;
     expressionAttributeValues[":disposalMonth"] = input.disposalMonth;
     updateExpression = `SET ${setExpressions.join(", ")}`;
@@ -198,10 +188,7 @@ export async function updateItem(
   }
 }
 
-export async function deleteItem(
-  userId: string,
-  itemId: string,
-): Promise<boolean> {
+export async function deleteItem(userId: string, itemId: string): Promise<boolean> {
   const result = await documentClient.send(
     new DeleteCommand({
       TableName: tableName,

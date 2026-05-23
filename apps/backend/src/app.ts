@@ -47,14 +47,9 @@ type ValidatedItemInput = {
   disposalMonth?: number;
 };
 
-type ValidationResult =
-  | { ok: true; value: ValidatedItemInput }
-  | { ok: false; message: string };
+type ValidationResult = { ok: true; value: ValidatedItemInput } | { ok: false; message: string };
 
-function validateItemBody(
-  body: ItemBody,
-  options: { allowDisposal: boolean },
-): ValidationResult {
+function validateItemBody(body: ItemBody, options: { allowDisposal: boolean }): ValidationResult {
   const name = typeof body.name === "string" ? body.name.trim() : "";
   const purchaseYear = Number(body.purchaseYear);
   const purchaseMonth = Number(body.purchaseMonth);

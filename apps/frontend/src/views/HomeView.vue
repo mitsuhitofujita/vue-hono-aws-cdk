@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useAuth } from "../composables/useAuth";
 
-const { user, isAuthenticated, isLoading, signInWithGoogle, signOut } =
-  useAuth();
+const { user, isAuthenticated, isLoading, signInWithGoogle, signOut } = useAuth();
 </script>
 
 <template>
@@ -11,18 +10,12 @@ const { user, isAuthenticated, isLoading, signInWithGoogle, signOut } =
       <div class="text-center mb-10">
         <div class="inline-block mb-4">
           <div class="border-2 border-primary-700 px-5 py-2">
-            <h1
-              class="font-logo font-medium text-4xl tracking-widest text-primary-800 uppercase"
-            >
+            <h1 class="font-logo font-medium text-4xl tracking-widest text-primary-800 uppercase">
               tocoop
             </h1>
           </div>
-          <div
-            class="border-b-2 border-l-2 border-r-2 border-primary-700 px-3 py-1"
-          >
-            <p class="font-logo text-xs tracking-wider text-primary-600">
-              COST PER MONTH TRACKER
-            </p>
+          <div class="border-b-2 border-l-2 border-r-2 border-primary-700 px-3 py-1">
+            <p class="font-logo text-xs tracking-wider text-primary-600">COST PER MONTH TRACKER</p>
           </div>
         </div>
         <p class="text-sm text-stone-500 leading-relaxed mt-4">
@@ -85,12 +78,7 @@ const { user, isAuthenticated, isLoading, signInWithGoogle, signOut } =
               class="w-full h-full object-cover"
               referrerpolicy="no-referrer"
             />
-            <svg
-              v-else
-              class="w-10 h-10 text-primary-500"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-            >
+            <svg v-else class="w-10 h-10 text-primary-500" fill="currentColor" viewBox="0 0 24 24">
               <path
                 d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
               />
@@ -100,9 +88,7 @@ const { user, isAuthenticated, isLoading, signInWithGoogle, signOut } =
 
         <div class="space-y-3">
           <div class="border border-stone-100 px-4 py-3">
-            <p
-              class="text-xs font-medium text-stone-400 uppercase tracking-wide mb-1"
-            >
+            <p class="text-xs font-medium text-stone-400 uppercase tracking-wide mb-1">
               Display Name
             </p>
             <p class="text-sm text-stone-800 font-medium">

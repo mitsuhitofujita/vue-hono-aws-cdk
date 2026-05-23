@@ -10,17 +10,10 @@ interface AuthClientCallbackStackProps extends StackProps {
 }
 
 export class AuthClientCallbackStack extends Stack {
-  constructor(
-    scope: Construct,
-    id: string,
-    props: AuthClientCallbackStackProps,
-  ) {
+  constructor(scope: Construct, id: string, props: AuthClientCallbackStackProps) {
     super(scope, id, props);
 
-    const callbackUrls = [
-      `https://${props.distributionDomainName}/`,
-      "http://localhost:5173/",
-    ];
+    const callbackUrls = [`https://${props.distributionDomainName}/`, "http://localhost:5173/"];
 
     const updateCall: cr.AwsSdkCall = {
       service: "CognitoIdentityServiceProvider",
@@ -35,9 +28,7 @@ export class AuthClientCallbackStack extends Stack {
         LogoutURLs: callbackUrls,
         SupportedIdentityProviders: ["Google"],
       },
-      physicalResourceId: cr.PhysicalResourceId.of(
-        `${props.userPoolClientId}-callbacks`,
-      ),
+      physicalResourceId: cr.PhysicalResourceId.of(`${props.userPoolClientId}-callbacks`),
     };
 
     new cr.AwsCustomResource(this, "UpdateOAuthCallbacks", {

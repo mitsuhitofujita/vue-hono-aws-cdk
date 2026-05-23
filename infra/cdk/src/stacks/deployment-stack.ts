@@ -15,11 +15,7 @@ export class DeploymentStack extends Stack {
     super(scope, id, props);
 
     new s3deploy.BucketDeployment(this, "WebsiteDeployment", {
-      sources: [
-        s3deploy.Source.asset(
-          path.join(__dirname, "../../../../apps/frontend/dist"),
-        ),
-      ],
+      sources: [s3deploy.Source.asset(path.join(__dirname, "../../../../apps/frontend/dist"))],
       destinationBucket: props.websiteBucket,
       distribution: props.distribution,
       distributionPaths: ["/*"],

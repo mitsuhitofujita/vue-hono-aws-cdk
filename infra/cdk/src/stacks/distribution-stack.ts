@@ -14,17 +14,10 @@ export class DistributionStack extends Stack {
   constructor(scope: Construct, id: string, props: DistributionStackProps) {
     super(scope, id, props);
 
-    const websiteBucket = s3.Bucket.fromBucketName(
-      this,
-      "WebsiteBucket",
-      props.websiteBucketName,
-    );
+    const websiteBucket = s3.Bucket.fromBucketName(this, "WebsiteBucket", props.websiteBucketName);
 
-    const spaFallbackFunction = new cloudfront.Function(
-      this,
-      "SpaFallbackFunction",
-      {
-        code: cloudfront.FunctionCode.fromInline(`
+    const spaFallbackFunction = new cloudfront.Function(this, "SpaFallbackFunction", {
+      code: cloudfront.FunctionCode.fromInline(`
 function handler(event) {
   var request = event.request;
   var uri = request.uri;
@@ -43,16 +36,13 @@ function handler(event) {
   return request;
 }
 `),
-        runtime: cloudfront.FunctionRuntime.JS_2_0,
-      },
-    );
+      runtime: cloudfront.FunctionRuntime.JS_2_0,
+    });
 
     this.distribution = new cloudfront.Distribution(this, "Distribution", {
       defaultBehavior: {
-        origin:
-          origins.S3BucketOrigin.withOriginAccessControl(websiteBucket),
-        viewerProtocolPolicy:
-          cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        origin: origins.S3BucketOrigin.withOriginAccessControl(websiteBucket),
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         functionAssociations: [
           {
             function: spaFallbackFunction,

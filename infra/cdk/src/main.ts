@@ -14,7 +14,7 @@ import { BackendApiStack } from "./stacks/backend-api-stack";
 import { DistributionApiOriginStack } from "./stacks/distribution-api-origin-stack";
 
 const app = new cdk.App();
-const envName = app.node.tryGetContext("envName") ?? "dev";
+const envName = (app.node.tryGetContext("envName") as string | undefined) ?? "dev";
 
 const websiteBucketName = `tocoop-${envName}-website`;
 
@@ -36,8 +36,9 @@ new DeploymentStack(app, `${envName}-Deployment`, {
   distribution: distributionStack.distribution,
 });
 
-const googleClientId = app.node.tryGetContext("googleClientId") ?? "";
-const googleClientSecret = app.node.tryGetContext("googleClientSecret") ?? "";
+const googleClientId = (app.node.tryGetContext("googleClientId") as string | undefined) ?? "";
+const googleClientSecret =
+  (app.node.tryGetContext("googleClientSecret") as string | undefined) ?? "";
 
 const authStack = new AuthStack(app, `${envName}-Auth`, {
   googleClientId,

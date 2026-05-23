@@ -8,11 +8,7 @@ interface WebsiteOriginAccessStackProps extends StackProps {
 }
 
 export class WebsiteOriginAccessStack extends Stack {
-  constructor(
-    scope: Construct,
-    id: string,
-    props: WebsiteOriginAccessStackProps,
-  ) {
+  constructor(scope: Construct, id: string, props: WebsiteOriginAccessStackProps) {
     super(scope, id, props);
 
     new s3.CfnBucketPolicy(this, "WebsiteBucketPolicy", {

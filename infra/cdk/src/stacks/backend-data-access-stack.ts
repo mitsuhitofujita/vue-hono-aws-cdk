@@ -8,11 +8,7 @@ interface BackendDataAccessStackProps extends StackProps {
 }
 
 export class BackendDataAccessStack extends Stack {
-  constructor(
-    scope: Construct,
-    id: string,
-    props: BackendDataAccessStackProps,
-  ) {
+  constructor(scope: Construct, id: string, props: BackendDataAccessStackProps) {
     super(scope, id, props);
 
     const tableArn = `arn:aws:dynamodb:${this.region}:${this.account}:table/${props.itemsTableName}`;

@@ -9,11 +9,7 @@ interface DistributionApiOriginStackProps extends StackProps {
 }
 
 export class DistributionApiOriginStack extends Stack {
-  constructor(
-    scope: Construct,
-    id: string,
-    props: DistributionApiOriginStackProps,
-  ) {
+  constructor(scope: Construct, id: string, props: DistributionApiOriginStackProps) {
     super(scope, id, props);
 
     props.distribution.addBehavior(
@@ -22,12 +18,10 @@ export class DistributionApiOriginStack extends Stack {
         protocolPolicy: cloudfront.OriginProtocolPolicy.HTTPS_ONLY,
       }),
       {
-        viewerProtocolPolicy:
-          cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
         cachePolicy: cloudfront.CachePolicy.CACHING_DISABLED,
-        originRequestPolicy:
-          cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
+        originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
       },
     );
   }

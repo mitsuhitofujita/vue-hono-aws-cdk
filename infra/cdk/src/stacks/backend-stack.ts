@@ -16,10 +16,7 @@ export class BackendStack extends Stack {
     super(scope, id, props);
 
     this.handler = new NodejsFunction(this, "ApiHandler", {
-      entry: path.join(
-        __dirname,
-        "../../../../apps/backend/src/lambda.ts",
-      ),
+      entry: path.join(__dirname, "../../../../apps/backend/src/lambda.ts"),
       handler: "handler",
       runtime: lambda.Runtime.NODEJS_22_X,
       architecture: lambda.Architecture.ARM_64,

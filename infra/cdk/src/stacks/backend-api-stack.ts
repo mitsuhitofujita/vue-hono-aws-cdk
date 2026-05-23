@@ -1,8 +1,5 @@
 import { CfnOutput, Stack, type StackProps } from "aws-cdk-lib";
-import {
-  HttpApi,
-  HttpMethod,
-} from "aws-cdk-lib/aws-apigatewayv2";
+import { HttpApi, HttpMethod } from "aws-cdk-lib/aws-apigatewayv2";
 import { HttpJwtAuthorizer } from "aws-cdk-lib/aws-apigatewayv2-authorizers";
 import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import * as lambda from "aws-cdk-lib/aws-lambda";
@@ -21,7 +18,7 @@ export class BackendApiStack extends Stack {
   constructor(scope: Construct, id: string, props: BackendApiStackProps) {
     super(scope, id, props);
 
-    const envName = this.node.tryGetContext("envName") ?? "dev";
+    const envName = (this.node.tryGetContext("envName") as string | undefined) ?? "dev";
 
     this.httpApi = new HttpApi(this, "BackendHttpApi", {
       apiName: `tocoop-${envName}-api`,
@@ -36,22 +33,15 @@ export class BackendApiStack extends Stack {
       },
     );
 
-    const importedHandler = lambda.Function.fromFunctionAttributes(
-      this,
-      "ImportedHandler",
-      {
-        functionArn: props.handlerArn,
-        sameEnvironment: true,
-      },
-    );
+    const importedHandler = lambda.Function.fromFunctionAttributes(this, "ImportedHandler", {
+      functionArn: props.handlerArn,
+      sameEnvironment: true,
+    });
 
     this.httpApi.addRoutes({
       path: "/api/{proxy+}",
       methods: [HttpMethod.ANY],
-      integration: new HttpLambdaIntegration(
-        "ApiIntegration",
-        importedHandler,
-      ),
+      integration: new HttpLambdaIntegration("ApiIntegration", importedHandler),
       authorizer,
     });
 

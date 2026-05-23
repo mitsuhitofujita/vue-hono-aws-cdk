@@ -16,18 +16,12 @@ export class AuthClientStack extends Stack {
     this.userPoolClient = new cognito.UserPoolClient(this, "WebClient", {
       userPool: props.userPool,
       generateSecret: false,
-      supportedIdentityProviders: [
-        cognito.UserPoolClientIdentityProvider.GOOGLE,
-      ],
+      supportedIdentityProviders: [cognito.UserPoolClientIdentityProvider.GOOGLE],
       oAuth: {
         flows: { authorizationCodeGrant: true },
         callbackUrls: ["http://localhost:5173/"],
         logoutUrls: ["http://localhost:5173/"],
-        scopes: [
-          cognito.OAuthScope.OPENID,
-          cognito.OAuthScope.EMAIL,
-          cognito.OAuthScope.PROFILE,
-        ],
+        scopes: [cognito.OAuthScope.OPENID, cognito.OAuthScope.EMAIL, cognito.OAuthScope.PROFILE],
       },
     });
 

@@ -22,11 +22,11 @@ For durable goods such as air conditioners, the purchase price is divided by the
 
 An air conditioner purchased in March 2026 for 100,000 JPY:
 
-| Month          | Months in Operation | Cost per Month |
-|----------------|---------------------|----------------|
-| March 2026     | 1                   | 100,000 JPY    |
-| April 2026     | 2                   | 50,000 JPY     |
-| May 2026       | 3                   | 33,333 JPY     |
+| Month      | Months in Operation | Cost per Month |
+| ---------- | ------------------- | -------------- |
+| March 2026 | 1                   | 100,000 JPY    |
+| April 2026 | 2                   | 50,000 JPY     |
+| May 2026   | 3                   | 33,333 JPY     |
 
 This concept is analogous to average fixed cost in economics, where the number of months in operation replaces the quantity of output.
 

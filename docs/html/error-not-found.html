@@ -1,116 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>tocoop - Not Found</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            primary: {
-              50: '#f4f7ed',
-              100: '#e6edda',
-              200: '#cedbb8',
-              300: '#afc48d',
-              400: '#93ad6a',
-              500: '#7a9650',
-              600: '#5e763d',
-              700: '#4a5c33',
-              800: '#3d4b2d',
-              900: '#354029',
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tocoop - Not Found</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#f4f7ed",
+                100: "#e6edda",
+                200: "#cedbb8",
+                300: "#afc48d",
+                400: "#93ad6a",
+                500: "#7a9650",
+                600: "#5e763d",
+                700: "#4a5c33",
+                800: "#3d4b2d",
+                900: "#354029",
+              },
+              secondary: {
+                50: "#faf8ed",
+                100: "#f3efd3",
+                200: "#e8dfa8",
+                300: "#d9c974",
+                400: "#ccb54c",
+                500: "#bda03e",
+                600: "#a37e33",
+                700: "#835e2c",
+                800: "#6d4d2b",
+                900: "#5e4128",
+              },
             },
-            secondary: {
-              50: '#faf8ed',
-              100: '#f3efd3',
-              200: '#e8dfa8',
-              300: '#d9c974',
-              400: '#ccb54c',
-              500: '#bda03e',
-              600: '#a37e33',
-              700: '#835e2c',
-              800: '#6d4d2b',
-              900: '#5e4128',
+            fontFamily: {
+              logo: ['"DM Mono"', "monospace"],
+              body: ['"Inter"', "sans-serif"],
             },
-          },
-          fontFamily: {
-            logo: ['"DM Mono"', 'monospace'],
-            body: ['"Inter"', 'sans-serif'],
           },
         },
-      },
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      min-width: 360px;
-    }
-  </style>
-</head>
-<body class="bg-stone-50 min-h-screen flex flex-col">
-
-  <!-- Global Header -->
-  <header class="border-b border-stone-200 bg-white">
-    <div class="max-w-sm mx-auto px-4 py-3 flex items-center justify-between">
-      <div class="border border-primary-700 px-3 py-1">
-        <span class="font-logo font-medium text-base tracking-widest text-primary-800 uppercase">tocoop</span>
-      </div>
-      <button
-        type="button"
-        aria-label="Open navigation menu"
-        class="w-9 h-9 rounded-full overflow-hidden border border-stone-200 hover:border-primary-400 transition-colors"
-      >
-        <img
-          src="https://i.pravatar.cc/80?img=13"
-          alt="Taro Yamada"
-          class="w-full h-full object-cover"
-        />
-      </button>
-    </div>
-  </header>
-
-  <!-- Main Content -->
-  <main class="flex-1 px-4 py-8">
-    <div class="w-full max-w-sm mx-auto">
-
-      <!-- Page Header -->
-      <div class="mb-6">
-        <h1 class="font-logo text-xs tracking-wider text-stone-400 uppercase border-b border-stone-200 pb-2">Not Found</h1>
-      </div>
-
-      <!-- Message -->
-      <div class="border-t border-b border-stone-200 bg-white px-4 py-6">
-        <p class="text-sm text-stone-600 leading-relaxed">
-          The page you're looking for doesn't exist or has been removed.
-        </p>
-      </div>
-
-      <!-- Back to Home Button -->
-      <div class="mt-6 flex justify-end">
-        <a
-          href="/"
-          class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 transition-colors"
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        min-width: 360px;
+      }
+    </style>
+  </head>
+  <body class="bg-stone-50 min-h-screen flex flex-col">
+    <!-- Global Header -->
+    <header class="border-b border-stone-200 bg-white">
+      <div class="max-w-sm mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="border border-primary-700 px-3 py-1">
+          <span class="font-logo font-medium text-base tracking-widest text-primary-800 uppercase"
+            >tocoop</span
+          >
+        </div>
+        <button
+          type="button"
+          aria-label="Open navigation menu"
+          class="w-9 h-9 rounded-full overflow-hidden border border-stone-200 hover:border-primary-400 transition-colors"
         >
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M3 12l9-9 9 9M5 10v10h4v-6h6v6h4V10"/>
-          </svg>
-          <span class="font-logo text-xs tracking-widest uppercase">Back to home</span>
-        </a>
+          <img
+            src="https://i.pravatar.cc/80?img=13"
+            alt="Taro Yamada"
+            class="w-full h-full object-cover"
+          />
+        </button>
       </div>
+    </header>
 
-    </div>
-  </main>
+    <!-- Main Content -->
+    <main class="flex-1 px-4 py-8">
+      <div class="w-full max-w-sm mx-auto">
+        <!-- Page Header -->
+        <div class="mb-6">
+          <h1
+            class="font-logo text-xs tracking-wider text-stone-400 uppercase border-b border-stone-200 pb-2"
+          >
+            Not Found
+          </h1>
+        </div>
 
-  <!-- Global Footer -->
-  <footer class="py-6 border-t border-stone-200 bg-white">
-    <p class="text-center font-logo text-xs tracking-widest text-stone-400 uppercase">tocoop</p>
-  </footer>
+        <!-- Message -->
+        <div class="border-t border-b border-stone-200 bg-white px-4 py-6">
+          <p class="text-sm text-stone-600 leading-relaxed">
+            The page you're looking for doesn't exist or has been removed.
+          </p>
+        </div>
 
-</body>
+        <!-- Back to Home Button -->
+        <div class="mt-6 flex justify-end">
+          <a
+            href="/"
+            class="inline-flex items-center gap-2 border border-primary-700 bg-primary-600 hover:bg-primary-700 text-white px-4 py-2 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="square"
+                stroke-linejoin="miter"
+                stroke-width="2"
+                d="M3 12l9-9 9 9M5 10v10h4v-6h6v6h4V10"
+              />
+            </svg>
+            <span class="font-logo text-xs tracking-widest uppercase">Back to home</span>
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="py-6 border-t border-stone-200 bg-white">
+      <p class="text-center font-logo text-xs tracking-widest text-stone-400 uppercase">tocoop</p>
+    </footer>
+  </body>
 </html>

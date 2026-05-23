@@ -1,0 +1,12 @@
+**/node_modules/**
+**/dist/**
+**/cdk.out/**
+**/*.tsbuildinfo
+infra/cdk/**/*.js
+infra/cdk/**/*.d.ts
+infra/cdk/**/*.js.map
+infra/cdk/**/*.d.ts.map
+pnpm-lock.yaml
+plans/
+.claude/
+.devcontainer/

@@ -5,7 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/dev.ts",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.668.0",

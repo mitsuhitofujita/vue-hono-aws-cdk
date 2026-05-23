@@ -1,11 +1,29 @@
 {
   "name": "vue-hono-aws-cdk",
   "private": true,
+  "type": "module",
   "scripts": {
     "kill-port": "bash scripts/kill-port/kill-port.sh",
     "build:frontend": "pnpm --filter @vue-hono-aws-cdk/frontend build",
     "deploy": "pnpm build:frontend && pnpm --filter @vue-hono-aws-cdk/cdk cdk deploy --all",
-    "deploy:web": "pnpm build:frontend && pnpm --filter @vue-hono-aws-cdk/cdk cdk deploy \"*-Deployment\""
+    "deploy:web": "pnpm build:frontend && pnpm --filter @vue-hono-aws-cdk/cdk cdk deploy \"*-Deployment\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
-  "packageManager": "pnpm@10.8.0"
+  "packageManager": "pnpm@10.8.0",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import-x": "^4.16.2",
+    "eslint-plugin-unused-imports": "^4.4.1",
+    "eslint-plugin-vue": "^10.9.1",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3",
+    "typescript-eslint": "^8.59.4",
+    "vue-eslint-parser": "^10.4.0"
+  }
 }

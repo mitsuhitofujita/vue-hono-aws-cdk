@@ -22,8 +22,9 @@ RUN npx playwright install-deps
 
 # Switch to node user
 USER node
+RUN mkdir -p /home/node/.aws
 ENV PNPM_HOME="/home/node/.pnpm"
-ENV PATH="$PNPM_HOME:/home/node/.local/bin:$PATH"
+ENV PATH="$PNPM_HOME/bin:/home/node/.local/bin:$PATH"
 
 RUN curl -fsSL https://claude.ai/install.sh | bash
 RUN pnpm add -g @playwright/cli

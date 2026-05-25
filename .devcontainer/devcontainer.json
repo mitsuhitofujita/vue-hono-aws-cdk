@@ -5,10 +5,13 @@
     },
     "forwardPorts": [
     ],
+    "remoteEnv": {
+        "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
+        "CLAUDE_SECRET_KEY": "${localEnv:CLAUDE_SECRET_KEY}"
+    },
     "remoteUser": "node",
     "mounts": [
-        "source=${localEnv:HOME}/.claude,target=/home/node/.claude,type=bind,consistency=cached",
-        "source=${localEnv:HOME}/.aws,target=/home/node/.aws,type=bind,consistency=cached"
+        "source=${localEnv:HOME}/.aws/config,target=/home/node/.aws/config,type=bind,ro=true"
     ],
     "customizations": {
         "vscode": {
